@@ -22,6 +22,7 @@ public class Task03Test {
     }
 
     @Test
+    @DisplayName("Login test with correct credentials")
     public void correctLoginTest() {
         driver.get(URL_LOGIN_PAGE);
         driver.findElement(LOGIN_FIELD).sendKeys("admin");
@@ -32,6 +33,7 @@ public class Task03Test {
     }
 
     @Test
+    @DisplayName("Login test with incorrect credentials")
     public void incorrectLoginTest() {
         driver.get(URL_LOGIN_PAGE);
         driver.findElement(LOGIN_FIELD).sendKeys("admin");
