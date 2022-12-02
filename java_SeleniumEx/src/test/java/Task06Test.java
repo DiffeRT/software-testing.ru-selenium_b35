@@ -1,13 +1,8 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Task06Test {
@@ -16,11 +11,13 @@ public class Task06Test {
     private final By LOGIN_BUTTON = By.name("login");
 
     private WebDriver driver;
+    private WebDriverWait wait;
 
     @BeforeAll
     public void start() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver = Config.startBrowser("chrome");
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     @AfterAll
@@ -35,50 +32,30 @@ public class Task06Test {
         driver.findElement(LOGIN_BUTTON).click();
     }
 
-    private boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
-    }
-
-    private List<String> getItemsLevelCache(By locator) {
-        List<String> itemsLevel1Cache = new ArrayList<>();
-        int size = driver.findElements(locator).size();
-        for (int i = 0; i < size; i++) {
-            List<WebElement> menuItems = driver.findElements(locator);
-            itemsLevel1Cache.add(menuItems.get(i).getAttribute("href"));
-        }
-        return itemsLevel1Cache;
-    }
-
     @Test
     public void clickAllMenuItemsTest() {
         openAdminPage();
-        List<String> itemsLevel1HRefs = getItemsLevelCache(By.cssSelector("#box-apps-menu a"));
+        int level1Count = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li")).size();
 
-        for (int i = 0; i < itemsLevel1HRefs.size(); i++) {
-            driver.findElement(By.cssSelector("a[href='" + itemsLevel1HRefs.get(i) + "']")).click();
-            boolean isHeaderFound = isElementPresent(By.cssSelector("td#content h1"));
+        for (int i = 0; i < level1Count; i++) {
+            driver.findElement(By.xpath("//ul[@id='box-apps-menu']/li[" + (i+1) + "]")).click();
+            boolean isHeaderFound = wait.until(
+                    (WebDriver d) -> d.findElement(By.cssSelector("td#content h1")).isDisplayed()
+            );
             Assertions.assertTrue(isHeaderFound, "Menu Item Clicked");
+            System.out.println(i+1);
 
-            List<WebElement> itemsLevel2 = driver.findElement(By.cssSelector("a[href='" + itemsLevel1HRefs.get(i) + "']")).findElements(By.xpath("..//a"));
-            if (itemsLevel2.size() > 0) {
-                List<String> itemsLevel2Cache = new ArrayList<>();
-                for (int j = 0; j < itemsLevel2.size(); j++) {
-                    List<WebElement> menuItemsInner = driver.findElement(By.cssSelector("a[href='" + itemsLevel1HRefs.get(i) + "']")).findElements(By.xpath("..//a"));
-                    itemsLevel2Cache.add(menuItemsInner.get(j).getAttribute("href"));
-                }
-
-                for (int j = 0; j < itemsLevel2Cache.size(); j++) {
-                    driver.findElement(By.cssSelector("a[href='" + itemsLevel2Cache.get(j) + "']")).click();
-                    boolean isInnerHeaderFound = isElementPresent(By.cssSelector("td#content h1"));
+            int innerICount = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li[" + (i+1) + "]//li")).size();
+            if (innerICount > 0) {
+                for (int j = 0; j < innerICount; j++) {
+                    driver.findElement(By.xpath("//ul[@id='box-apps-menu']/li[" + (i+1) + "]//li[" + (j+1) + "]")).click();
+                    boolean isInnerHeaderFound = wait.until(
+                            (WebDriver d) -> d.findElement(By.cssSelector("td#content h1")).isDisplayed()
+                    );
                     Assertions.assertTrue(isInnerHeaderFound, "Menu Item Clicked");
+                    System.out.println("--" + (j+1));
                 }
             }
-
         }
     }
 
