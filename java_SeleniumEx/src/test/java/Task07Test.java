@@ -27,11 +27,10 @@ public class Task07Test {
     public void checkStickersAvailabilityTest() {
         driver.get("http://localhost/litecart");
 
-        List<WebElement> prodItems = driver.findElements(By.cssSelector("li.product.column.shadow.hover-light"));
+        List<WebElement> prodItems = driver.findElements(By.cssSelector("li.product"));
         for (WebElement prodItem : prodItems) {
             List<WebElement> stickers = prodItem.findElements(By.className("sticker"));
-            Assertions.assertEquals(1, stickers.size(), "Only one sticker available");
-            System.out.println(stickers.get(0).getText());
+            Assertions.assertEquals(1, stickers.size(), "Only one sticker is available");
         }
     }
 }
