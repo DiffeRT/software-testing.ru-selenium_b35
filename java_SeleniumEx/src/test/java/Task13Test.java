@@ -72,16 +72,16 @@ public class Task13Test {
 
     private void checkRemoveItemsButton(int count) {
         while (count > 0) {
-            if (elementIsNotFound(TABLE_ROW) && elementIsNotFound(TABLE_ROW)) {
+            //The same element could be added twice. That means one delete action deletes 2 instances
+            if (elementIsNotFound(TABLE_ROW) || elementIsNotFound(REMOVE_ITEM)) {
                 return;
             }
-
             int tableSizeBefore = driver.findElements(TABLE_ROW).size();
+            wait.until(ExpectedConditions.elementToBeClickable(REMOVE_ITEM));
             driver.findElement(REMOVE_ITEM).click();
             count--;
 
-            wait.until(ExpectedConditions.numberOfElementsToBeLessThan(TABLE_ROW, tableSizeBefore));
-            int tableSizeAfter = driver.findElements(TABLE_ROW).size();
+            int tableSizeAfter = getAfterRemoveRowsCount(tableSizeBefore);
             Assertions.assertTrue(tableSizeBefore > tableSizeAfter);
         }
     }
@@ -103,6 +103,17 @@ public class Task13Test {
         try {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
             return driver.findElements(locator).size() == 0;
+        }
+        finally {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        }
+    }
+
+    private int getAfterRemoveRowsCount(int tableSizeBefore) {
+        try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+            List<WebElement> after = wait.until(ExpectedConditions.numberOfElementsToBeLessThan(TABLE_ROW, tableSizeBefore));
+            return after.size();
         }
         finally {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
