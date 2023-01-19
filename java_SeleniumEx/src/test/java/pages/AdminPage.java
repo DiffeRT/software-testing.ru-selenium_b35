@@ -27,6 +27,9 @@ public class AdminPage extends BasePage {
     @FindBy(className="fa-sign-out")
     public WebElement logoutButton;
 
+    @FindBy(className="fa-sign-out")
+    public List<WebElement> logoutButtonElements;
+
     @FindBy(xpath="//ul[@id='box-apps-menu']/li")
     public List<WebElement> menuItems;
 

@@ -4,10 +4,12 @@ import app.ConfigConstants;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.MainPage;
 
 import java.time.Duration;
+import java.util.List;
 
 public class MainPageSteps extends BaseSteps {
     MainPage mainPage;
@@ -36,6 +38,10 @@ public class MainPageSteps extends BaseSteps {
         return new ProductItemPageSteps(driver);
     }
 
+    public List<WebElement> getProductItems() {
+        return mainPage.productItems;
+    }
+
     public CartPageSteps openCart() {
         mainPage.checkoutButton.click();
         return new CartPageSteps(driver);
@@ -52,5 +58,9 @@ public class MainPageSteps extends BaseSteps {
         finally {
             driver.manage().timeouts().implicitlyWait(ConfigConstants.IMPLICITLY_WAIT);
         }
+    }
+
+    public void verifyThatProductHasOnlyOneSticker(WebElement product) {
+        Assertions.assertEquals(1, mainPage.stickers(product).size(), "Only one sticker should be found");
     }
 }

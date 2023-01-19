@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,4 +20,8 @@ public class MainPage extends BasePage {
 
     @FindBy(xpath="//a[contains(text(), 'Checkout')]")
     public WebElement checkoutButton;
+
+    public List<WebElement> stickers(WebElement productItem) {
+        return productItem.findElements(By.className("sticker"));
+    }
 }
