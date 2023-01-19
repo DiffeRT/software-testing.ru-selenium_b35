@@ -1,10 +1,14 @@
 package steps;
 
 import app.ConfigConstants;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class BaseSteps {
     protected WebDriver driver;
@@ -14,5 +18,11 @@ public class BaseSteps {
         this.driver = driver;
         this.driver.manage().timeouts().implicitlyWait(ConfigConstants.IMPLICITLY_WAIT);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    }
+
+    public void verifyThatListASCSorted(List<String> list, String msg) {
+        ArrayList<String> aSorted = new ArrayList<>(list);
+        Collections.sort(aSorted);
+        Assertions.assertEquals(list, aSorted, msg);
     }
 }

@@ -1,13 +1,9 @@
 package steps;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.CountriesPage;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CountriesPageSteps extends BaseSteps {
@@ -61,9 +57,4 @@ public class CountriesPageSteps extends BaseSteps {
         return zones;
     }
 
-    public void verifyThatListASCSorted(List<String> list, String msg) {
-        ArrayList<String> aSorted = new ArrayList<>(list);
-        Collections.sort(aSorted);
-        Assertions.assertEquals(list, aSorted, msg);
-    }
 }
