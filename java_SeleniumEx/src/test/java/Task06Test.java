@@ -2,6 +2,8 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.net.MalformedURLException;
 import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -14,8 +16,9 @@ public class Task06Test {
     private WebDriverWait wait;
 
     @BeforeAll
-    public void start() {
-        driver = Config.startBrowser("chrome");
+    public void start() throws MalformedURLException {
+        //driver = Config.startBrowser("chrome");
+        driver = Config.startRemoteStandaloneDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }

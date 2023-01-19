@@ -24,9 +24,9 @@ public class Task15Test {
     @BeforeEach
     public void start() throws MalformedURLException {
 //        driver = startSimpleDriver();
-//        driver = startRemoteStandaloneDriver();
-//        driver = startRemoteHubDriver("linux");
-        driver = startRemoteCloudDriver("WINDOWS");
+        driver = startRemoteStandaloneDriver();
+//        driver = startRemoteHubDriver("any");
+//        driver = startRemoteCloudDriver("MAC");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
@@ -36,7 +36,7 @@ public class Task15Test {
     }
 
     @Test
-    public void actionsBasketTest() throws InterruptedException {
+    public void actions01Test() throws InterruptedException {
         driver.get("https://ya.ru");
         driver.findElement(YA_SEARCH_FIELD).sendKeys("java thread sleep");
         driver.findElement(YA_FIND_BUTTON).click();
@@ -46,16 +46,50 @@ public class Task15Test {
         switchToNewTabAndClose();
 
         driver.get("https://google.ru");
-        List<WebElement> co = driver.findElements(By.xpath("//button/div[contains(text(), 'Alles accepteren')]"));
+        //List<WebElement> co = driver.findElements(By.xpath("//button/div[contains(text(), 'Alles accepteren')]"));
+        List<WebElement> co = driver.findElements(By.id("L2AGLb"));
         if (co.size() > 0) {
             co.get(0).click();
         }
-        driver.findElement(G_SEARCH_FIELD).sendKeys("java thread sleep");
-        driver.findElement(G_FIND_BUTTON).click();
+        driver.findElement(G_SEARCH_FIELD).sendKeys("java thread sleep" + Keys.ENTER);
+//        driver.findElement(G_FIND_BUTTON).click();
         Thread.sleep(3000);
         driver.findElement(By.cssSelector("#center_col a")).click();
         Thread.sleep(3000);
         switchToNewTabAndClose();
+    }
+
+    @Test
+    public void actions02Test() throws InterruptedException {
+        driver.get("https://ya.ru");
+        driver.findElement(YA_SEARCH_FIELD).sendKeys("java thread sleep");
+        driver.findElement(YA_FIND_BUTTON).click();
+        Thread.sleep(3000);
+        driver.findElement(By.cssSelector(".main__center a")).click();
+        Thread.sleep(3000);
+        switchToNewTabAndClose();
+
+        driver.get("https://google.ru");
+        //List<WebElement> co = driver.findElements(By.xpath("//button/div[contains(text(), 'Alles accepteren')]"));
+        List<WebElement> co = driver.findElements(By.id("L2AGLb"));
+        if (co.size() > 0) {
+            co.get(0).click();
+        }
+        driver.findElement(G_SEARCH_FIELD).sendKeys("java thread sleep" + Keys.ENTER);
+        Thread.sleep(3000);
+        driver.findElement(By.cssSelector("#center_col a")).click();
+        Thread.sleep(3000);
+        switchToNewTabAndClose();
+    }
+
+    @Test
+    public void actionGetCourseHunterIndex() throws InterruptedException {
+        driver.get("https://coursehunter.net/course/python-dlya-analiza-dannyh");
+        List<WebElement> items = driver.findElements(By.className("lessons-item"));
+        for (WebElement e : items) {
+            System.out.println(e.findElement(By.className("lessons-title")).getText());
+            System.out.println(e.findElement(By.className("lessons-name")).getText());
+        }
     }
 
     private void switchToNewTabAndClose() {
@@ -77,7 +111,7 @@ public class Task15Test {
     }
 
     private WebDriver startRemoteStandaloneDriver() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://192.168.0.167:4444/wd/hub"), new ChromeOptions());
+        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), new ChromeOptions());
         driver.manage().window().setPosition(new Point(0,0));
         driver.manage().window().setSize(new Dimension(1440,900));
         return driver;
@@ -85,7 +119,7 @@ public class Task15Test {
 
     private WebDriver startRemoteHubDriver(String platform) throws MalformedURLException {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("platformName", platform);
+        //chromeOptions.setCapability("platformName", platform);
         driver = new RemoteWebDriver(new URL("http://192.168.0.167:4444/wd/hub"), chromeOptions);
         driver.manage().window().setPosition(new Point(0,0));
         driver.manage().window().setSize(new Dimension(1440,900));
