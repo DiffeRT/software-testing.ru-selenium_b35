@@ -1,6 +1,8 @@
 package steps;
 
 import app.ConfigConstants;
+import app.Duck;
+import app.DuckStyle;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -47,6 +49,27 @@ public class MainPageSteps extends BaseSteps {
         return new CartPageSteps(driver);
     }
 
+    public ProductItemPageSteps openCampProductItem(Duck selectedDuck) {
+        WebElement campItem = mainPage.campaignsItem;
+        selectedDuck.name = mainPage.nameByItem(campItem).getText();
+        selectedDuck.price = mainPage.priceByItem(campItem).getText();
+        selectedDuck.priceCamp = mainPage.priceCampByItem(campItem).getText();
+        campItem.click();
+        return new ProductItemPageSteps(driver);
+    }
+
+    public DuckStyle getCampProductItemPriceStyle() {
+        DuckStyle duckStyle = new DuckStyle();
+        WebElement openedItem = mainPage.campaignsItem;
+        duckStyle.setPriceStyle(mainPage.getPriceStyleByItem(openedItem));
+        duckStyle.setPriceColor(mainPage.getPriceColorByItem(openedItem));
+        duckStyle.setPriceCampColor(mainPage.getPriceCampColorByItem(openedItem));
+        duckStyle.setPriceHeight(mainPage.getPriceSizeByItem(openedItem));
+        duckStyle.setPriceCampHeight(mainPage.getPriceCampSizeByItem(openedItem));
+        duckStyle.setPriceCampFontWeight(mainPage.getPriceCampFWByItem(openedItem));
+        return duckStyle;
+    }
+
     public void verifyThatItemsCounterUpdated(int count) {
         try {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
@@ -63,4 +86,20 @@ public class MainPageSteps extends BaseSteps {
     public void verifyThatProductHasOnlyOneSticker(WebElement product) {
         Assertions.assertEquals(1, mainPage.stickers(product).size(), "Only one sticker should be found");
     }
+
+    public void verifyThatOpenedAttrMatches(Duck selectedDuck, Duck openedDuck) {
+        Assertions.assertEquals(selectedDuck.name, openedDuck.name, "Name should match");
+        Assertions.assertEquals(selectedDuck.price, openedDuck.price, "Price should match");
+        Assertions.assertEquals(selectedDuck.priceCamp, openedDuck.priceCamp, "Campaign Price should match");
+    }
+
+    public void verifyThatProductStyleCorrect(DuckStyle actualDuckStyle) {
+        Assertions.assertEquals("line-through", actualDuckStyle.getPriceStyle(), "Regular Price should be line-through");
+        Assertions.assertTrue(actualDuckStyle.getPriceColor().get("R").equals(actualDuckStyle.getPriceColor().get("G")) && actualDuckStyle.getPriceColor().get("G").equals(actualDuckStyle.getPriceColor().get("B")), "Regular Price should be Grey (R == G == B)");
+        // bold is >= 700
+        Assertions.assertTrue(actualDuckStyle.getPriceCampFontWeight() >= 700, "Campaign Price should be bold");
+        Assertions.assertTrue(actualDuckStyle.getPriceCampColor().get("G").equals(0) && actualDuckStyle.getPriceCampColor().get("B").equals(0), "Campaign Price should be Red (G == B == 0)");
+        Assertions.assertTrue(actualDuckStyle.getPriceCampHeight() > actualDuckStyle.getPriceHeight(), "Campaign Price Height >= The Regular one");
+    }
 }
+

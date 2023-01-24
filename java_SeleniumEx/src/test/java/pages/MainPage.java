@@ -24,4 +24,43 @@ public class MainPage extends BasePage {
     public List<WebElement> stickers(WebElement productItem) {
         return productItem.findElements(By.className("sticker"));
     }
+
+    @FindBy(css = "#box-campaigns li")
+    public WebElement campaignsItem;
+
+    public WebElement nameByItem(WebElement product) {
+        return product.findElement(By.className("name"));
+    }
+
+    public WebElement priceByItem(WebElement product) {
+        return product.findElement(By.className("regular-price"));
+    }
+
+    public WebElement priceCampByItem(WebElement product) {
+        return product.findElement(By.className("campaign-price"));
+    }
+
+    public String getPriceStyleByItem(WebElement product) {
+        return priceByItem(product).getCssValue("text-decoration-line");
+    }
+
+    public String getPriceColorByItem(WebElement product) {
+        return priceByItem(product).getCssValue("color");
+    }
+
+    public String getPriceSizeByItem(WebElement product) {
+        return priceByItem(product).getCssValue("font-size");
+    }
+
+    public String getPriceCampFWByItem(WebElement product) {
+        return priceCampByItem(product).getCssValue("font-weight");
+    }
+
+    public String getPriceCampColorByItem(WebElement product) {
+        return priceCampByItem(product).getCssValue("color");
+    }
+
+    public String getPriceCampSizeByItem(WebElement product) {
+        return priceCampByItem(product).getCssValue("font-size");
+    }
 }
