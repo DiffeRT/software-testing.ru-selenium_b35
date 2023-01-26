@@ -1,7 +1,5 @@
 package app;
 
-import java.util.Locale;
-
 public class Customer {
     //Required
     public String firstName;

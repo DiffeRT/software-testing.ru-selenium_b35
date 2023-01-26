@@ -31,6 +31,11 @@ public class CountriesPageSteps extends BaseSteps {
         return result;
     }
 
+    public EditCountryPageSteps openCountryByIndex(int index) {
+        countriesPage.countryByIndex(index).click();
+        return new EditCountryPageSteps(driver);
+    }
+
     public List<Integer> getIndexesWithZones() {
         List<WebElement> zoneList = countriesPage.countryZones;
         ArrayList<Integer> indexes = new ArrayList<>();
@@ -40,21 +45,6 @@ public class CountriesPageSteps extends BaseSteps {
             }
         }
         return indexes;
-    }
-
-    public CountriesPageSteps openCountryByIndex(int index) {
-        countriesPage.countryByIndex(index).click();
-        return this;
-    }
-
-    public List<String> getZonesList() {
-        ArrayList<String> zones = new ArrayList<>();
-        for (WebElement zone : countriesPage.countryZones) {
-            if (!zone.getText().isEmpty()) {
-                zones.add(zone.getText());
-            }
-        }
-        return zones;
     }
 
 }

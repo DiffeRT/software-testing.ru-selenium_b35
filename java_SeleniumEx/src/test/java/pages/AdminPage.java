@@ -48,4 +48,6 @@ public class AdminPage extends BasePage {
     @FindBy(css="td#content h1")
     public WebElement contentHeader;
 
+    @FindBy(xpath = "//*[contains(text(), 'Catalog')]")
+    public WebElement catalogMenuItem;
 }

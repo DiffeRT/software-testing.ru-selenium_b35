@@ -63,6 +63,11 @@ public class AdminPageSteps extends BaseSteps {
         adminPage.subMenuItemByIndexes(index1, index2).click();
     }
 
+    public CatalogPageSteps clickMenuItemCatalog() {
+        adminPage.catalogMenuItem.click();
+        return new CatalogPageSteps(driver);
+    }
+
     public void verifyThatUserLoggedIn() {
         Assertions.assertTrue(adminPage.logoutButton.isDisplayed(), "Logout button should be visible");
     }
