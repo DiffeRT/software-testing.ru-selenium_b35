@@ -2,11 +2,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -36,9 +38,17 @@ public class Task12Test {
 
     private final By SAVE_BUTTON = By.name("save");
 
+    public WebDriver startRemoteStandaloneDriver() throws MalformedURLException {
+        WebDriver driver;
+        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), new ChromeOptions());
+        driver.manage().window().setPosition(new Point(0,0));
+        driver.manage().window().setSize(new Dimension(1440,900));
+        return driver;
+    }
+
     @BeforeEach
-    public void start() {
-        driver = Config.startBrowser("chrome");
+    public void start() throws MalformedURLException {
+        driver = startRemoteStandaloneDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 

@@ -70,6 +70,23 @@ public class MainPageSteps extends BaseSteps {
         return duckStyle;
     }
 
+    public CreateAccountSteps clickNewCustomerLink() {
+        mainPage.newCustomerLink.click();
+        return new CreateAccountSteps(driver);
+    }
+
+    public MainPageSteps loginAs(String email, String password) {
+        mainPage.email.sendKeys(email);
+        mainPage.password.sendKeys(password);
+        mainPage.loginBTN.click();
+        return this;
+    }
+
+    public MainPageSteps logOut() {
+        mainPage.logoutBTN.click();
+        return this;
+    }
+
     public void verifyThatItemsCounterUpdated(int count) {
         try {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
@@ -100,6 +117,14 @@ public class MainPageSteps extends BaseSteps {
         Assertions.assertTrue(actualDuckStyle.getPriceCampFontWeight() >= 700, "Campaign Price should be bold");
         Assertions.assertTrue(actualDuckStyle.getPriceCampColor().get("G").equals(0) && actualDuckStyle.getPriceCampColor().get("B").equals(0), "Campaign Price should be Red (G == B == 0)");
         Assertions.assertTrue(actualDuckStyle.getPriceCampHeight() > actualDuckStyle.getPriceHeight(), "Campaign Price Height >= The Regular one");
+    }
+
+    public void verifyThatCustomerLoggedIn() {
+        Assertions.assertTrue(mainPage.logoutBTN.isDisplayed(), "Logout button should be visible");
+    }
+
+    public void verifyThatCustomerLoggedOut() {
+        Assertions.assertTrue(mainPage.loginBTN.isDisplayed(), "Login button should be visible");
     }
 }
 

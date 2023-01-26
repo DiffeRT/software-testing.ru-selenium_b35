@@ -2,16 +2,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,5 +72,13 @@ public class Task17Test {
         driver.findElement(LOGIN_FIELD).sendKeys("admin");
         driver.findElement(PASSWORD_FIELD).sendKeys("admin");
         driver.findElement(LOGIN_BUTTON).click();
+    }
+
+    public WebDriver startRemoteStandaloneDriver() throws MalformedURLException {
+        WebDriver driver;
+        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), new ChromeOptions());
+        driver.manage().window().setPosition(new Point(0,0));
+        driver.manage().window().setSize(new Dimension(1440,900));
+        return driver;
     }
 }

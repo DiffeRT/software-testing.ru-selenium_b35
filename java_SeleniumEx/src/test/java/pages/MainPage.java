@@ -63,4 +63,19 @@ public class MainPage extends BasePage {
     public String getPriceCampSizeByItem(WebElement product) {
         return priceCampByItem(product).getCssValue("font-size");
     }
+
+    @FindBy(css = "#box-account-login a[href*=create_account]")
+    public WebElement newCustomerLink;
+
+    @FindBy(xpath = "//*[contains(text(), 'Logout')]")
+    public WebElement logoutBTN;
+
+    @FindBy(name = "login")
+    public WebElement loginBTN;
+
+    @FindBy(name="email")
+    public WebElement email;
+
+    @FindBy(name="password")
+    public WebElement password;
 }

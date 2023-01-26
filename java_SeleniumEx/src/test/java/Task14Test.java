@@ -1,9 +1,11 @@
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -21,8 +23,10 @@ public class Task14Test {
 
 
     @BeforeEach
-    public void start() {
-        driver = Config.startBrowser("chrome");
+    public void start() throws MalformedURLException {
+        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), new FirefoxOptions());
+        driver.manage().window().setPosition(new Point(0,0));
+        driver.manage().window().setSize(new Dimension(1440,900));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
