@@ -1,14 +1,11 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.assertj.core.api.SoftAssertions;
 
 
 import java.net.MalformedURLException;
@@ -29,15 +26,12 @@ public class Task17Test {
 
 
     @BeforeEach
-    public void start() {
+    public void start() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
         options.setCapability("goog:loggingPrefs", logPrefs);
-        driver = new ChromeDriver(options);
-
-        //driver = Config.startBrowser("chrome");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver = startRemoteStandaloneDriver(options);
     }
 
     @AfterEach
@@ -47,6 +41,8 @@ public class Task17Test {
 
     @Test
     public void browserLogTest() {
+        SoftAssertions softAssertions = new SoftAssertions();
+
         openAdminPageByURL("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1");
 
         List<WebElement> itemsList = driver.findElements(By.xpath("//td[3]/a[contains(@href, 'edit_product')]"));
@@ -55,16 +51,16 @@ public class Task17Test {
             itemsPages.add(webElement.getAttribute("href"));
         }
 
-//        List<LogEntry> logs = new ArrayList<>();
+        List<LogEntry> logs = new ArrayList<>();
         for (String href : itemsPages) {
             driver.findElement(By.cssSelector("[href='" + href + "']")).click();
             driver.findElement(CANCEL_BUTTON).click();
-//            logs = driver.manage().logs().get("performance").getAll();
-//            System.out.println(logs);
+            logs = driver.manage().logs().get("performance").getAll();
+            System.out.println(logs);
+
+            softAssertions.assertThat(logs.size() == 0);
         }
-        List<LogEntry> logs = driver.manage().logs().get("browser").getAll();
-        System.out.println(logs);
-        Assertions.assertEquals(0, logs.size(), "Log should be empty");
+        softAssertions.assertAll();
     }
 
     private void openAdminPageByURL(String URL) {
@@ -74,11 +70,12 @@ public class Task17Test {
         driver.findElement(LOGIN_BUTTON).click();
     }
 
-    public WebDriver startRemoteStandaloneDriver() throws MalformedURLException {
+    public WebDriver startRemoteStandaloneDriver(ChromeOptions options) throws MalformedURLException {
         WebDriver driver;
-        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), new ChromeOptions());
+        driver = new RemoteWebDriver(new URL("http://192.168.248.131:4444/wd/hub"), options);
         driver.manage().window().setPosition(new Point(0,0));
         driver.manage().window().setSize(new Dimension(1440,900));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return driver;
     }
 }
