@@ -20,7 +20,7 @@ public class BaseTest {
 
         //driver = ConfigDriver.startBrowserLocal("chrome");
         //driver = ConfigDriver.startBrowserRemoteStandalone(ConfigConstants.REMOTE_STANDALONE_SERVER);
-        driver = ConfigDriver.startBrowserRemoteHub(ConfigConstants.REMOTE_HUB_SERVER, "linux");
+        driver = ConfigDriver.startBrowserRemoteHub(ConfigConstants.REMOTE_HUB_SERVER, "any");
         ConfigDriver.setBrowserSize(driver, 1440, 900);
 
         tlDriver.set(driver);
