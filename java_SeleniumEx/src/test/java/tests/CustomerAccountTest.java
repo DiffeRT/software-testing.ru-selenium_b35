@@ -26,7 +26,6 @@ public class CustomerAccountTest extends BaseTest {
         Customer user = new Customer().setRandomCustomer();
 
         Set<String> oldIds = customersPageSteps.getCustomerIds();
-        System.out.println(oldIds);
 
         mainPageSteps.open()
                 .clickNewCustomerLink()

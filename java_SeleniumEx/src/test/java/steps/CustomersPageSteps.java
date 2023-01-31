@@ -36,7 +36,6 @@ public class CustomersPageSteps extends BaseSteps {
 
     public void verifyThatCustomerHasBeenAdded(Customer customer, Set<String> oldIds) {
         Set<String> newIds = getCustomerIds();
-        System.out.println(newIds);
 
         Assertions.assertTrue(newIds.containsAll(oldIds), "Prev rows shouldn't be affected");
         Assertions.assertEquals(oldIds.size() + 1, newIds.size(), "Only one row should be added");
