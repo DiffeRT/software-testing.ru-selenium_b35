@@ -53,7 +53,9 @@ public class ConfigDriver {
 
     public static WebDriver startBrowserRemoteHub(String remoteHost, String platform) throws MalformedURLException {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("platformName", platform);
+        if (!platform.equalsIgnoreCase("any")) {
+            chromeOptions.setCapability("platformName", platform);
+        }
         return new RemoteWebDriver(new URL(String.format("http://%s/wd/hub", remoteHost)), chromeOptions);
     }
 

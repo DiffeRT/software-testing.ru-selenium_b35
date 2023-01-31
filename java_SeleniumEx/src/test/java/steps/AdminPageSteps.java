@@ -22,6 +22,7 @@ public class AdminPageSteps extends BaseSteps {
 
     public boolean isUserLoggedOn() {
         try {
+            open();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
             return adminPage.logoutButtonElements.size() == 1;
         }
