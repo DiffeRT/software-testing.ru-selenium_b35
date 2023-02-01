@@ -10,8 +10,8 @@ import steps.CatalogPageSteps;
 
 @DisplayName("Product Catalog")
 public class CatalogTest extends BaseTest {
-    AdminPageSteps adminPageSteps;
-    CatalogPageSteps catalogPageSteps;
+    protected AdminPageSteps adminPageSteps;
+    protected CatalogPageSteps catalogPageSteps;
 
     @Test
     @DisplayName("Add new product item to the Catalog")

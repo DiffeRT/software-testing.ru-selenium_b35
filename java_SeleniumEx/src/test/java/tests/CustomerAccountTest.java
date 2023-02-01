@@ -13,8 +13,8 @@ import java.util.Set;
 
 @DisplayName("Customer Account")
 public class CustomerAccountTest extends BaseTest {
-    private MainPageSteps mainPageSteps;
-    private CustomersPageSteps customersPageSteps;
+    protected MainPageSteps mainPageSteps;
+    protected CustomersPageSteps customersPageSteps;
 
     @BeforeEach
     public void start() throws MalformedURLException {

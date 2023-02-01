@@ -12,7 +12,7 @@ import java.util.List;
 
 @DisplayName("Country Zones")
 public class CountriesZonesSortingTest extends BaseTest {
-    CountriesPageSteps countriesPageSteps;
+    protected CountriesPageSteps countriesPageSteps;
 
     @BeforeEach
     public void start() throws MalformedURLException {

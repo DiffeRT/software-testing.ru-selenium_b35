@@ -14,8 +14,8 @@ import java.net.MalformedURLException;
 
 @DisplayName("Product Item Opening")
 public class ProductOpeningTest extends BaseTest {
-    private MainPageSteps mainPageSteps;
-    private ProductItemPageSteps productItemPageSteps;
+    protected MainPageSteps mainPageSteps;
+    protected ProductItemPageSteps productItemPageSteps;
 
     @BeforeEach
     public void start() throws MalformedURLException {

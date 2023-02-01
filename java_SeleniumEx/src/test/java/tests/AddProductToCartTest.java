@@ -9,8 +9,8 @@ import steps.MainPageSteps;
 
 @DisplayName("Add Product to Cart")
 public class AddProductToCartTest extends BaseTest {
-    private MainPageSteps mainPageSteps;
-    private CartPageSteps cartPageSteps;
+    protected MainPageSteps mainPageSteps;
+    protected CartPageSteps cartPageSteps;
 
 
     @Test

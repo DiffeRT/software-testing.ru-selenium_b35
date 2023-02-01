@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 
 @DisplayName("Admin Page Opening")
 public class LoginAdminPageTest extends BaseTest {
-    AdminPageSteps adminPageSteps;
+    protected AdminPageSteps adminPageSteps;
 
     @BeforeEach
     public void start() throws MalformedURLException {
