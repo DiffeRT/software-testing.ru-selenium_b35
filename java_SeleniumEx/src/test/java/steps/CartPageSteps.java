@@ -1,6 +1,7 @@
 package steps;
 
 import app.ConfigConstants;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,11 +19,13 @@ public class CartPageSteps extends BaseSteps {
         cartPage = new CartPage(driver);
     }
 
+    @Step("Open Cart page")
     public CartPageSteps open() {
         driver.get("http://localhost/litecart/en/checkout");
         return this;
     }
 
+    @Step("Remove Items")
     public void removeItems() {
         int count = cartPage.productItems.size();
         while (count > 0) {
@@ -36,6 +39,7 @@ public class CartPageSteps extends BaseSteps {
         }
     }
 
+    @Step("Verify that the Cart is empty")
     public void verifyThatCartIsEmpty() {
         Assertions.assertTrue(cartPage.itemsTableNotFound(), "The Cart should be empty");
     }

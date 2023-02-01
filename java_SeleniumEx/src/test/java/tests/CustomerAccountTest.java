@@ -4,12 +4,14 @@ package tests;
 
 import app.Customer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import steps.CustomersPageSteps;
 import steps.MainPageSteps;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+@DisplayName("Customer Account")
 public class CustomerAccountTest extends BaseTest {
     private MainPageSteps mainPageSteps;
     private CustomersPageSteps customersPageSteps;
@@ -22,6 +24,7 @@ public class CustomerAccountTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Add new customer (required fields)")
     public void registerNewUserReqFieldsTest() {
         Customer user = new Customer().setRandomCustomer();
 
@@ -42,6 +45,7 @@ public class CustomerAccountTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Existed customer can login")
     public void userLoginTest() {
         mainPageSteps.open()
                 .loginAs("user@email.com", "user123");

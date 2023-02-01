@@ -1,5 +1,6 @@
 package steps;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.CountriesPage;
@@ -14,6 +15,7 @@ public class CountriesPageSteps extends BaseSteps {
         countriesPage = new CountriesPage(driver);
     }
 
+    @Step("Open Countries page")
     public CountriesPageSteps open() {
         AdminPageSteps adminPageSteps = new AdminPageSteps(driver);
         if (!adminPageSteps.isUserLoggedOn()) {
@@ -23,6 +25,7 @@ public class CountriesPageSteps extends BaseSteps {
         return this;
     }
 
+    @Step("Get the list of the countries")
     public List<String> getCountryList() {
         ArrayList<String> result = new ArrayList<>();
         for (WebElement country : countriesPage.countries) {
@@ -31,11 +34,13 @@ public class CountriesPageSteps extends BaseSteps {
         return result;
     }
 
+    @Step("Open country by index {index}")
     public EditCountryPageSteps openCountryByIndex(int index) {
         countriesPage.countryByIndex(index).click();
         return new EditCountryPageSteps(driver);
     }
 
+    @Step("Get the countries which has country zones")
     public List<Integer> getIndexesWithZones() {
         List<WebElement> zoneList = countriesPage.countryZones;
         ArrayList<Integer> indexes = new ArrayList<>();

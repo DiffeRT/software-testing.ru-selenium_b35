@@ -9,6 +9,7 @@ import steps.AdminPageSteps;
 
 import java.net.MalformedURLException;
 
+@DisplayName("Admin Page Opening")
 public class LoginAdminPageTest extends BaseTest {
     AdminPageSteps adminPageSteps;
 
@@ -19,7 +20,7 @@ public class LoginAdminPageTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Login test with correct credentials")
+    @DisplayName("Login with correct credentials")
     public void correctLoginTest() {
         adminPageSteps.open()
                 .loginAs("admin", "admin");
@@ -27,7 +28,7 @@ public class LoginAdminPageTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Login test with incorrect credentials")
+    @DisplayName("Login with incorrect credentials")
     public void incorrectLoginTest() {
         adminPageSteps.open()
                 .loginAs("admin", "admin1");

@@ -2,6 +2,7 @@ package steps;
 
 import app.Duck;
 import app.DuckStyle;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,7 @@ public class ProductItemPageSteps extends BaseSteps {
         productItemPage = new ProductItemPage(driver);
     }
 
+    @Step("Add opened Product Item to Cart")
     public void addToCart() {
         if (productItemPage.getSizeSelect() != null) {
             Select sizeSelector = new Select(productItemPage.getSizeSelect());
@@ -24,6 +26,7 @@ public class ProductItemPageSteps extends BaseSteps {
         productItemPage.addToCartButton.click();
     }
 
+    @Step("Get Product Item attributes")
     public Duck getProductItemAttr() {
         Duck duck = new Duck();
         WebElement openedItem = productItemPage.productItem;
@@ -33,6 +36,7 @@ public class ProductItemPageSteps extends BaseSteps {
         return duck;
     }
 
+    @Step("Get Product Item style attributes")
     public DuckStyle getProductItemStyle() {
         DuckStyle duckStyle = new DuckStyle();
         WebElement openedItem = productItemPage.productItem;
@@ -43,6 +47,7 @@ public class ProductItemPageSteps extends BaseSteps {
         return duckStyle;
     }
 
+    @Step("Verify that the style matches spec")
     public void verifyThatProductStyleCorrect(DuckStyle actualDuckStyle) {
         // bold is >= 700
         Assertions.assertTrue(actualDuckStyle.getPriceCampFontWeight() >= 700, "Campaign Price should be bold");

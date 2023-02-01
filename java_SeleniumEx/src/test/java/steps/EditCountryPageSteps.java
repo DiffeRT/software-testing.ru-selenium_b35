@@ -1,5 +1,6 @@
 package steps;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ public class EditCountryPageSteps extends BaseSteps {
         editCountryPage = new EditCountryPage(driver);
     }
 
+    @Step("Get the list of the zones")
     public List<String> getZonesList() {
         ArrayList<String> zones = new ArrayList<>();
         for (WebElement zone : editCountryPage.countryZones) {
@@ -28,10 +30,12 @@ public class EditCountryPageSteps extends BaseSteps {
         return zones;
     }
 
+    @Step("Get the set of the links")
     public List<WebElement> getExternalLinks() {
         return editCountryPage.externalLinks;
     }
 
+    @Step("Open link: {link}")
     public void OpenLink(WebElement link) {
         mainTab = driver.getWindowHandle();
         link.click();
@@ -49,12 +53,14 @@ public class EditCountryPageSteps extends BaseSteps {
         return newWindow;
     }
 
+    @Step("Close the tab")
     public void closeTab() {
         driver.switchTo().window(getOtherTab(mainTab));
         driver.close();
         driver.switchTo().window(mainTab);
     }
 
+    @Step("Verify that new tab is opened")
     public void VerifyThatNewTabOpened() {
         String newWindow = getOtherTab(mainTab);
         Assertions.assertFalse(newWindow.isEmpty(), "New tab should be opened");

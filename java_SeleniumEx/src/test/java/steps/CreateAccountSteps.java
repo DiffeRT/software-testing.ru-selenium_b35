@@ -1,6 +1,7 @@
 package steps;
 
 import app.Customer;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import pages.CreateAccountPage;
@@ -13,11 +14,13 @@ public class CreateAccountSteps extends BaseSteps {
         createAccountPage = new CreateAccountPage(driver);
     }
 
+    @Step("Open New Account page")
     public CreateAccountSteps open() {
         driver.get("http://localhost/litecart/en/create_account");
         return this;
     }
 
+    @Step("Fill required fields")
     public CreateAccountSteps fillRequiredFields(Customer customer) {
         createAccountPage.firstName.sendKeys(customer.firstName);
         createAccountPage.lastName.sendKeys(customer.lastName);
@@ -33,15 +36,18 @@ public class CreateAccountSteps extends BaseSteps {
         return this;
     }
 
+    @Step("Save new customer")
     public void save() {
         createAccountPage.createBTN.click();
     }
 
+    @Step("Select country {name}")
     public void selectCountry(String name) {
         createAccountPage.countryList.click();
         createAccountPage.getCountryOptionByName(name).click();
     }
 
+    @Step("Select state {name}")
     public void selectState(String name) {
         Select stateSelector = new Select(createAccountPage.stateList);
         stateSelector.selectByVisibleText(name);

@@ -1,6 +1,7 @@
 package steps;
 
 import app.Customer;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,7 @@ public class CustomersPageSteps extends BaseSteps {
         customersPage = new CustomersPage(driver);
     }
 
+    @Step("Open Customers page")
     public CustomersPageSteps open() {
         AdminPageSteps adminPageSteps = new AdminPageSteps(driver);
         if (!adminPageSteps.isUserLoggedOn()) {
@@ -26,6 +28,7 @@ public class CustomersPageSteps extends BaseSteps {
         return this;
     }
 
+    @Step("Get the list of the customers")
     public Set<String> getCustomerIds() {
         open();
         return customersPage.customerRows
@@ -34,6 +37,7 @@ public class CustomersPageSteps extends BaseSteps {
                 .collect(Collectors.toSet());
     }
 
+    @Step("Verify that the customer has been added")
     public void verifyThatCustomerHasBeenAdded(Customer customer, Set<String> oldIds) {
         Set<String> newIds = getCustomerIds();
 

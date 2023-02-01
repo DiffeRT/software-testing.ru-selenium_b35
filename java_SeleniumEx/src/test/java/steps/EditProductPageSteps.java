@@ -1,6 +1,7 @@
 package steps;
 
 import app.Product;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -18,6 +19,7 @@ public class EditProductPageSteps extends BaseSteps {
         editProductPage = new EditProductPage(driver);
     }
 
+    @Step("Fill the fields with random values")
     public EditProductPageSteps fillProductFieldsRandom(Product product) {
         editProductPage.statusEnabled.click();
         editProductPage.name.sendKeys(product.getName());
@@ -63,16 +65,19 @@ public class EditProductPageSteps extends BaseSteps {
         }
     }
 
+    @Step("Select manufacturer by index {index}")
     public void selectManufacturerByIndex(int index) {
         Select manSelector = new Select(editProductPage.manufacturer);
         manSelector.selectByIndex(index);
     }
 
+    @Step("Select price currency by index {index}")
     public void selectPriceCurrencyByIndex(int index) {
         Select currSelector = new Select(editProductPage.priceCurrency);
         currSelector.selectByIndex(index);
     }
 
+    @Step("Save Product Item")
     public void save() {
         editProductPage.saveBTN.click();
     }

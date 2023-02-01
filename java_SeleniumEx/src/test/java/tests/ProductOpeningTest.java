@@ -5,12 +5,14 @@ package tests;
 import app.Duck;
 import app.DuckStyle;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import steps.MainPageSteps;
 import steps.ProductItemPageSteps;
 
 import java.net.MalformedURLException;
 
+@DisplayName("Product Item Opening")
 public class ProductOpeningTest extends BaseTest {
     private MainPageSteps mainPageSteps;
     private ProductItemPageSteps productItemPageSteps;
@@ -23,6 +25,7 @@ public class ProductOpeningTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Opened product item consistency check")
     public void checkProductItemConsistencyTest() {
         Duck selectedDuck = new Duck();
 
@@ -34,21 +37,20 @@ public class ProductOpeningTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Product item styles check")
     public void checkProductItemStyleTest() {
-        DuckStyle duckStyle = new DuckStyle();
-
-        duckStyle = mainPageSteps.open()
+        DuckStyle duckStyle = mainPageSteps.open()
                 .getCampProductItemPriceStyle();
 
         mainPageSteps.verifyThatProductStyleCorrect(duckStyle);
     }
 
     @Test
+    @DisplayName("Opened product item styles check")
     public void checkOpenedProductItemStyleTest() {
-        DuckStyle duckStyle = new DuckStyle();
         Duck fakeDuck = new Duck();
 
-        duckStyle = mainPageSteps.open()
+        DuckStyle duckStyle = mainPageSteps.open()
                 .openCampProductItem(fakeDuck)
                 .getProductItemStyle();
 
