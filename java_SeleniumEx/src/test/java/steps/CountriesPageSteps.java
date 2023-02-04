@@ -45,6 +45,7 @@ public class CountriesPageSteps extends BaseSteps {
         List<WebElement> zoneList = countriesPage.countryZones;
         ArrayList<Integer> indexes = new ArrayList<>();
         for (int i = 0; i < zoneList.size(); i++) {
+            //Looks like getText() works slow when using remote connection
             if (Integer.parseInt(zoneList.get(i).getText()) > 0) {
                 indexes.add(i+1);
             }
